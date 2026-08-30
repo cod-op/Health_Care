@@ -18,7 +18,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:5173"
+    origin: "https://frontend-eta-nine-83.vercel.app"
   })
 );
 
