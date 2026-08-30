@@ -1,0 +1,421 @@
+# CareConnect – Healthcare Support Web App
+
+CareConnect is a simple healthcare support web application designed to help people submit support requests to an NGO or community support team.
+
+The main purpose of the project is to make the support-request process simple and organized. Users can submit their basic details and explain what type of help they need. An AI-assisted feature then creates a short summary of the request and suggests a support priority for the NGO team.
+
+> **Note:** This is a concept-level educational prototype. It does not provide medical diagnosis, treatment, or emergency medical services.
+
+---
+
+## Features
+
+* Simple and responsive healthcare support form
+* User can select the type of support required
+* AI-assisted request summary
+* AI-based support priority suggestion
+* Suggested action for NGO volunteers
+* Clean and responsive UI
+* Separate frontend and backend
+* REST API using Express.js
+* MongoDB support for storing requests
+* Error handling and basic form validation
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* React.js
+* Vite
+* Tailwind CSS
+* JavaScript
+* HTML5
+
+### Backend
+
+* Node.js
+* Express.js
+* REST API
+
+### Database
+
+* MongoDB
+* Mongoose
+
+### AI
+
+* Gemini
+
+### Deployment
+
+* Vercel – Frontend
+* Render – Backend
+* MongoDB Atlas – Database
+
+---
+
+## AI Idea
+
+### AI-Assisted Healthcare Support Request Analysis
+
+The application uses AI to help NGO support staff review incoming requests faster.
+
+When a user submits the support form, the request description is sent from the React frontend to the Express backend.
+
+The backend sends the relevant request information to the AI service.
+
+The AI generates:
+
+1. A short summary of the request
+2. A support priority – Low, Medium, or High
+3. A suggested action for the NGO support team
+
+### Example
+
+A user submits:
+
+> "My grandmother is unable to travel to the pharmacy and needs help getting her regular medicines."
+
+The AI may generate:
+
+```text
+Summary:
+The user is requesting assistance with accessing regular medicines
+for an elderly family member.
+
+Priority:
+Medium
+
+Suggested Action:
+Contact the requester and check whether a volunteer can assist
+with medicine collection or delivery.
+```
+
+The AI is only used for organizing and summarizing requests. It is not used for medical diagnosis or treatment recommendations.
+
+---
+
+## NGO Use-Case
+
+The application can be used by a healthcare NGO or community organization to collect support requests from people who need assistance.
+
+For example, users may request:
+
+* Medical assistance
+* Medicine delivery support
+* Transport assistance
+* Elderly care
+* General healthcare-related support
+
+Instead of receiving unstructured messages, the NGO team can receive a summarized request with a suggested handling priority.
+
+This can help volunteers:
+
+* Understand requests quickly
+* Identify requests that may need faster follow-up
+* Organize incoming support requests
+* Reduce manual work when reviewing requests
+* Connect people with suitable community support
+
+---
+
+## How It Works
+
+```text
+User
+  |
+  v
+React + Tailwind Form
+  |
+  v
+Express REST API
+  |
+  +----------------+
+  |                |
+  v                v
+MongoDB          OpenAI
+  |                |
+  |                v
+  |          AI Summary
+  |          Priority
+  |          Suggested Action
+  |                |
+  +-------+--------+
+          |
+          v
+     React UI
+          |
+          v
+   Request Summary
+```
+
+---
+
+## Project Structure
+
+```text
+careconnect/
+│
+├── frontend/
+│   │
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Hero.jsx
+│   │   │   ├── HowItWorks.jsx
+│   │   │   ├── SupportForm.jsx
+│   │   │   ├── RequestSummary.jsx
+│   │   │   └── Footer.jsx
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── main.jsx
+│   │
+│   ├── .env
+│   ├── package.json
+│   └── vite.config.js
+│
+└── backend/
+    │
+    ├── config/
+    │   ├── db.js
+    │   └── openai.js
+    │
+    ├── controllers/
+    │   └── supportController.js
+    │
+    ├── models/
+    │   └── SupportRequest.js
+    │
+    ├── routes/
+    │   └── supportRoutes.js
+    │
+    ├── services/
+    │   └── aiService.js
+    │
+    ├── middleware/
+    │   └── errorHandler.js
+    │
+    ├── utils/
+    │   └── response.js
+    │
+    ├── .env
+    ├── .gitignore
+    ├── package.json
+    └── server.js
+```
+
+---
+
+## Installation
+
+Clone the project:
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+Go to the frontend:
+
+```bash
+cd frontend
+npm install
+```
+
+Go to the backend:
+
+```bash
+cd ../backend
+npm install
+```
+
+---
+
+## Environment Variables
+
+Create a `.env` file inside the backend folder.
+
+```env
+PORT=5000
+
+MONGODB_URI=your_mongodb_connection_string
+
+OPENAI_API_KEY=your_openai_api_key
+```
+
+For the frontend, create:
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+Do not upload `.env` files or API keys to GitHub.
+
+---
+
+## Running the Project
+
+### Start Backend
+
+```bash
+cd backend
+npm run dev
+```
+
+Backend will run on:
+
+```text
+http://localhost:5000
+```
+
+### Start Frontend
+
+Open another terminal:
+
+```bash
+cd frontend
+npm run dev
+```
+
+Frontend will run on:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## API
+
+### Submit Support Request
+
+```text
+POST /api/support/analyze
+```
+
+Example request:
+
+```json
+{
+  "name": "Rahul Kumar",
+  "email": "rahul@example.com",
+  "phone": "9876543210",
+  "supportType": "Medicine Support",
+  "message": "I need help getting medicines for my grandmother."
+}
+```
+
+Example response:
+
+```json
+{
+  "success": true,
+  "data": {
+    "name": "Rahul Kumar",
+    "supportType": "Medicine Support",
+    "summary": "The user needs assistance accessing medicines for an elderly family member.",
+    "priority": "Medium",
+    "suggestedAction": "Contact the requester and check whether a volunteer can assist."
+  }
+}
+```
+
+---
+
+## Database
+
+MongoDB is used to store support requests.
+
+A support request can contain:
+
+```text
+name
+email
+phone
+supportType
+message
+aiSummary
+priority
+suggestedAction
+createdAt
+```
+
+MongoDB Atlas can be used as the cloud database during deployment.
+
+---
+
+## Deployment
+
+### Frontend
+
+The React frontend can be deployed using Vercel.
+
+Build command:
+
+```bash
+npm run build
+```
+
+### Backend
+
+The Express backend can be deployed using Render.
+
+Start command:
+
+```bash
+npm start
+```
+
+### Database
+
+MongoDB Atlas can be used for the production database.
+
+---
+
+## Live Demo
+
+**Live Website:**
+`YOUR_VERCEL_LINK`
+
+**Backend API:**
+`YOUR_RENDER_BACKEND_LINK`
+
+**GitHub Repository:**
+`YOUR_GITHUB_LINK`
+
+---
+
+## Future Improvements
+
+Some possible improvements for the next version are:
+
+* NGO volunteer dashboard
+* Admin login
+* Request status tracking
+* Volunteer assignment
+* Email notifications
+* WhatsApp notifications
+* Request history
+* Search and filtering
+* Better data privacy controls
+* Multilingual support
+
+---
+
+## Disclaimer
+
+CareConnect is an educational prototype created for demonstrating frontend, backend, database, and AI integration.
+
+The application should not be used as a replacement for professional medical advice, diagnosis, treatment, or emergency services.
+
+No real patient or sensitive medical information should be submitted to the demonstration version.
+
+---
+
+## Author
+
+**Your Name**
+
+Healthcare Support Web App – Mini Project
