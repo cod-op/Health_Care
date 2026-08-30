@@ -33,7 +33,7 @@ function SupportForm({ onAnalysis }) {
 
     try {
       const response = await axios.post(
-        "https://health-care-evnw.onrender.com",
+        "https://health-care-evnw.onrender.com/api/support/analyze",
         form
       );
 
